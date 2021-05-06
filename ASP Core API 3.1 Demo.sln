@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP Core API 3.1 Demo", "ASP Core API 3.1 Demo\ASP Core API 3.1 Demo.csproj", "{BDCD4AFD-4F5D-4A61-9BFE-8E82DFD43513}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDCD4AFD-4F5D-4A61-9BFE-8E82DFD43513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCD4AFD-4F5D-4A61-9BFE-8E82DFD43513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCD4AFD-4F5D-4A61-9BFE-8E82DFD43513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCD4AFD-4F5D-4A61-9BFE-8E82DFD43513}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F14C4B0-67A6-4CD0-B813-87C1C0DA3F2E}
+	EndGlobalSection
+EndGlobal
