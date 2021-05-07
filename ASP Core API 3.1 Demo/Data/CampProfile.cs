@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ASP_Core_API_3._1_Demo.Data.Entities;
 using ASP_Core_API_3._1_Demo.Model;
+using ASP_Core_API_3._1_Demo.Models;
 using AutoMapper;
 
 namespace ASP_Core_API_3._1_Demo.Data
@@ -18,6 +19,9 @@ namespace ASP_Core_API_3._1_Demo.Data
                 .ReverseMap();
 
             CreateMap<Talk, TalkModel>()
+                .ReverseMap();
+
+            CreateMap<Speaker, SpeakerModel>()
                 .ReverseMap();
 
         }
