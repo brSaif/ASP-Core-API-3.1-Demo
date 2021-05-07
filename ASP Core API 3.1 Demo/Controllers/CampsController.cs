@@ -94,6 +94,12 @@ namespace ASP_Core_API_3._1_Demo.Controllers
         {
             try
             {
+                var monikerInUse = await _repository.GetCampAsync(model.Moniker);
+                if (monikerInUse != null)
+                {
+                    return BadRequest("Moniker Already Exist! ");
+                }
+
                 var location = _linkGenerator.GetPathByAction("get", "Camps",new { moniker = model.Moniker});
 
                 if (string.IsNullOrEmpty(location)) return BadRequest();
