@@ -14,6 +14,6 @@ namespace ASP_Core_API_3._1_Demo.Data.Entities
         public Location Location { get; set; }
         public DateTime EventDate { get; set; }
         public int Length { get; set; } = 1;
-        public ICollection<Talk> Talks { get; set; }
+        public IEnumerable<Talk> Talks { get; set; }
     }
 }

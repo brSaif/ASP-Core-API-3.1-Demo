@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using ASP_Core_API_3._1_Demo.Data;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,7 @@ namespace ASP_Core_API_3._1_Demo
         {
             services.AddDbContext<CampContext>();
 
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<ICampRepository, CampRepository>();
 
             services.AddControllers();
