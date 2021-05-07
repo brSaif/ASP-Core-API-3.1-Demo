@@ -66,5 +66,23 @@ namespace ASP_Core_API_3._1_Demo.Controllers
                 return BadRequest("Failed To Load Data");
             }
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult> SearchByDate(DateTime theDate, bool includeTalks = false)
+        {
+            try
+            {
+                var result = await _repository.GetAllCampsByEventDate(theDate, includeTalks);
+               
+                if (!result.Any()) return NotFound();
+
+                return Ok(_mapper.Map<IEnumerable<CampModel>>(result));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
+                return BadRequest("Failed To Load Data");
+            }
+        }
     }
 }
