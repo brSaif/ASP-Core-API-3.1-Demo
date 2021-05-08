@@ -137,5 +137,24 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             }
             return BadRequest("Failed To Update Data");
         }
+
+        [HttpDelete("{moniker}")]
+        public async Task<IActionResult> Delete(string moniker)
+        {
+            try
+            {
+                var oldCamp = await _repository.GetCampAsync(moniker);
+                if (oldCamp == null) return NotFound();
+
+                _repository.Delete(oldCamp);
+
+                if (await _repository.SaveChangesAsync()) return Ok("Camp Successfully Deleted");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
+            }
+            return BadRequest("Failed To Delete Camp");
+        }
     }
 }
