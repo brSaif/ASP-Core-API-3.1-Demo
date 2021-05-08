@@ -118,5 +118,24 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             }
             return BadRequest("Failed To Load Data");
         }
+
+        [HttpPut("{moniker}")]
+        public async Task<ActionResult<CampModel>> Put(string moniker, [FromBody]CampModel model)
+        {
+            try
+            {
+                var oldCamp = await _repository.GetCampAsync(moniker);
+                if (oldCamp == null) return NotFound($"Could not find camp with moniker of {moniker}");
+
+                _mapper.Map(model, oldCamp);
+
+                if (await _repository.SaveChangesAsync()) return _mapper.Map<CampModel>(oldCamp);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
+            }
+            return BadRequest("Failed To Update Data");
+        }
     }
 }
