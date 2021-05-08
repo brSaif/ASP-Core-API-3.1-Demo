@@ -54,6 +54,8 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             try
             {
                 var talks = await _repository.GetTalkByMonikerAsync(moniker, id);
+                if (talks == null) return NotFound();
+                
                 return Ok(_mapper.Map<TalkModel>(talks));
             }
             catch (Exception ex)
@@ -128,7 +130,28 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             {
                 _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
             }
-            return BadRequest("Failed To update new talk");
+            return BadRequest("Failed To get the Talk to update");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(string moniker, int id)
+        {
+            try
+            {
+                var talk = await _repository.GetTalkByMonikerAsync(moniker, id);
+                if (talk == null) return NotFound("Failed to find the talk to delete");
+
+                _repository.Delete(talk);
+                if(await _repository.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
+            }
+            return BadRequest("Failed To delete talk ");
         }
     }
 }
