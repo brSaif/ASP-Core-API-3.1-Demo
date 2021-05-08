@@ -44,26 +44,28 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             {
                 _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
             }
+
             return BadRequest("Failed To Get Talks by moniker");
         }
-        
+
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> Get(string moniker,int id)
+        public async Task<ActionResult> Get(string moniker, int id)
         {
             try
             {
-                var talks = await _repository.GetTalkByMonikerAsync(moniker,id);
+                var talks = await _repository.GetTalkByMonikerAsync(moniker, id);
                 return Ok(_mapper.Map<TalkModel>(talks));
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
             }
+
             return BadRequest("Failed To Get the talk by Talk Id");
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(string moniker,[FromBody] TalkModel model)
+        public async Task<ActionResult> Post(string moniker, [FromBody] TalkModel model)
         {
             try
             {
@@ -85,7 +87,7 @@ namespace ASP_Core_API_3._1_Demo.Controllers
                 {
                     var location = _linkGenerator.GetPathByAction(HttpContext,
                         "Get",
-                        values:new {moniker,id = talk.TalkId});
+                        values: new {moniker, id = talk.TalkId});
                     return Created(location, _mapper.Map<TalkModel>(talk));
                 }
             }
@@ -93,7 +95,40 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             {
                 _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
             }
+
             return BadRequest("Failed To save new talk");
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<TalkModel>> Put(string moniker, int id, [FromBody]TalkModel model)
+        {
+            try
+            {
+                var talk = await _repository.GetTalkByMonikerAsync(moniker,id,true);
+                if (talk == null) return NotFound("Talk Does not exist");
+
+                _mapper.Map(model, talk);
+
+                // After the Mapping
+                if (model.Speaker != null)
+                {
+                    var speaker = await _repository.GetSpeakerAsync(model.Speaker.SpeakerId);
+                    if (speaker != null)
+                    {
+                        talk.Speaker = speaker;
+                    }
+                }
+
+               
+
+                if (await _repository.SaveChangesAsync()) return _mapper.Map<TalkModel>(talk);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
+            }
+            return BadRequest("Failed To update new talk");
         }
     }
 }

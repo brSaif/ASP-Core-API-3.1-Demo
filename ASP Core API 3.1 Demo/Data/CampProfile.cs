@@ -19,7 +19,10 @@ namespace ASP_Core_API_3._1_Demo.Data
                 .ReverseMap();
 
             CreateMap<Talk, TalkModel>()
-                .ReverseMap();
+                .ReverseMap()
+                // To Ignore Mapping In the Reverse Map
+                .ForMember(t => t.Camp, opt => opt.Ignore())
+                .ForMember(t => t.Speaker, opt => opt.Ignore());
 
             CreateMap<Speaker, SpeakerModel>()
                 .ReverseMap();
