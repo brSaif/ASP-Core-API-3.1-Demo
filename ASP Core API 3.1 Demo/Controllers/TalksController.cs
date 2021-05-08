@@ -44,7 +44,22 @@ namespace ASP_Core_API_3._1_Demo.Controllers
             {
                 _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
             }
-            return BadRequest("Failed To Get Camp");
-}
+            return BadRequest("Failed To Get Talks by moniker");
+        }
+        
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> Get(string moniker,int id)
+        {
+            try
+            {
+                var talks = await _repository.GetTalkByMonikerAsync(moniker,id);
+                return Ok(_mapper.Map<TalkModel>(talks));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed To Load Data. The following exception is thrown {ex}");
+            }
+            return BadRequest("Failed To Get the talk by Talk Id");
+        }
     }
 }
